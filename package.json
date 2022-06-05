@@ -1,6 +1,6 @@
 {
     "name": "cryptoswitch",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "description": "CryptoSwitch",
     "homepage": "https://cryptoswitch.ru",
     "main": "src/main.js",
