@@ -15,7 +15,7 @@ web-build:
 	npm run build
 
 web-deploy: web-build
-	/usr/bin/rsync -a ./www/ web:/var/www/html/
+	/usr/bin/rsync -a ./www/ $(web):/var/www/html/
 	sudo systemctl restart nginx
 
 # API server
