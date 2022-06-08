@@ -8,6 +8,16 @@ all: build
 # WEB
 web=35.214.191.249
 
+web-box-create:
+	ssh web sudo apt update
+	ssh web sudo apt install -y nginx
+	ssh web sudo useradd -s /bin/bash -d /home/igor/ -m -G sudo igor
+	ssh web sudo useradd -s /bin/bash -m web
+	ssh web sudo chown -R web:web /var/www/html
+	ssh web sudo chmod -R 0775 /var/www/html
+	ssh web sudo usermod -a -G web mshogin
+	ssh web sudo usermod -a -G web ikopanev
+
 web-run-dev:
 	npm run dev
 
@@ -18,20 +28,7 @@ web-deploy: web-build
 	/usr/bin/rsync -a ./www/ $(web):/var/www/html/
 	sudo systemctl restart nginx
 
-# API server
-api-run-dev:
-	go run cmd/api/main.go
-
-api-setup:
-	./scripts/trader-setup.sh
-
-api-deploy:
-	scp ../api-server_0.2-0_amd64.deb trader:/home/mshogin/
-	ssh trader sudo dpkg -i /home/mshogin/api-server_0.2-0_amd64.deb
-	sudo systemctl restart api-server.service
-
-api-deb:
-	dpkg-buildpackage -us -uc -b --host-arch amd64
-
-api-clean:
-	rm -f cmd/api-server
+web-deploy-nginx:
+	scp sc-web-nginx.conf web:~/
+	ssh web sudo cp -f ~/sc-web-nginx.conf /etc/nginx/sites-enabled/
+	ssh web sudo systemctl restart nginx.service
