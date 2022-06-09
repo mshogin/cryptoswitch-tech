@@ -26,7 +26,8 @@ web-build:
 
 web-deploy: web-build
 	/usr/bin/rsync -a ./www/ $(web):~/www
-	ssh web sudo mv -f ~/www /var/www/html
+	ssh web sudo rm -rf /var/www/html
+	ssh web sudo cp -f ~/www /var/www/html
 	ssh web sudo chown -R web:web /var/www/html
 	ssh web sudo systemctl restart nginx
 
