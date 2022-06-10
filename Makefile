@@ -24,10 +24,10 @@ web-run-dev:
 web-build:
 	npm run build
 
-web-deploy: web-build
+web-deploy:
 	/usr/bin/rsync -a ./www/ $(web):~/www
 	ssh web sudo rm -rf /var/www/html
-	ssh web sudo cp -f ~/www /var/www/html
+	ssh web sudo cp -rf ~/www /var/www/html
 	ssh web sudo chown -R web:web /var/www/html
 	ssh web sudo systemctl restart nginx
 
