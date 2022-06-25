@@ -1,2 +1,4 @@
 .DS_Store
-node_modules
+ui/node_modules
+api/node_modules
+ui/wwwg

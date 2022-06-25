@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+set -x
+
+if pm2 status api | grep api; then
+    pm2 restart api.js
+else
+    pm2 start api.js
+fi
